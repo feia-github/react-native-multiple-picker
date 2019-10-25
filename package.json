@@ -1,0 +1,61 @@
+{
+  "_from": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+  "_id": "react-native-multiple-picker@0.0.21",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/react-native-multiple-picker",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "react-native-multiple-picker@git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "name": "react-native-multiple-picker",
+    "escapedName": "react-native-multiple-picker",
+    "rawSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "saveSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "fetchSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/flyskywhy/react-native-multiple-picker.git#4baf4eb660ecd265cca244f293ba48f8cd729a7c",
+  "_spec": "react-native-multiple-picker@git://github.com/flyskywhy/react-native-multiple-picker.git",
+  "_where": "D:\\Projects\\feia5\\re-pregnancy",
+  "author": {
+    "name": "Mojtaba Izadmehr"
+  },
+  "bugs": {
+    "url": "https://github.com/S4liz/react-native-multiple-picker/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "react-native-linear-gradient": "^2.3.0",
+    "moment": "2.24.0"
+  },
+  "deprecated": false,
+  "description": "A fancy cross-platform multiple picker module for react-native.",
+  "homepage": "https://github.com/S4liz/react-native-multiple-picker#readme",
+  "keywords": [
+    "react-native",
+    "picker",
+    "multi",
+    "multiple",
+    "select",
+    "selector",
+    "date",
+    "date-picker",
+    "time-picker",
+    "wheel-picker"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "react-native-multiple-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/S4liz/react-native-multiple-picker.git"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "version": "0.0.21"
+}
