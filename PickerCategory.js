@@ -6,54 +6,65 @@ import {
   FlatList,
   TouchableWithoutFeedback
 } from "react-native";
+import Theme from "../../src/Theme";
+
 class PickerCategory extends Component {
   constructor(props) {
     super(props);
-    if (this.props.initValue) {
-      var initValue = this.props.initValue[this.props.catId];
-    }
-
+    var initValue = this.props.initValue[this.props.catId];
     this.state = {
       selectedId: initValue
     };
   }
 
-  goToIndex = () => {
-    // if (this.props.initValue[this.props.catId]) {
-    //   let selelement = this.props.initValue[this.props.catId];
-    //   const index2 = this.props.data.findIndex(
-    //     element => element.key === selelement
-    //   );
-    //   this.flatList_Ref.scrollToIndex({ animated: true, index: index2 });
-    // }
-  };
-
   getSelectedIndex = () => {
     let initialIndex = 0;
     if (this.props.initValue[this.props.catId]) {
-      let selelement = this.props.initValue[this.props.catId];
+      const selectedElement = this.props.initValue[this.props.catId];
       const index2 = this.props.data.findIndex(
-        element => element.key === selelement
+        element => element.key == selectedElement
       );
-      console.log({ selelement, index2 });
       if (index2 > 0) {
         initialIndex = index2;
       }
-      console.log({ selelement, index2, initialIndex });
     }
     return initialIndex;
   };
 
-  componentDidMount() {
-    // setTimeout(() => {
-    //   this.flatList_Ref.scrollToIndex({ animated: true, index: 10 });
-    // }, 3000);
-  }
+  goToOffset = () => {
+    let heigthOfSelectedItem = 0;
+    if (
+      this.flatList_Ref &&
+      this.flatList_Ref._listRef._frames[this.props.initValue[this.props.catId]]
+    ) {
+      heigthOfSelectedItem = this.flatList_Ref._listRef._frames[
+        this.props.initValue[this.props.catId]
+      ].length;
+      console.log(
+        "hi",
+        this.flatList_Ref._listRef._frames[
+          this.props.initValue[this.props.catId].length
+        ]
+      );
+    }
+    let countOfItemsInScreen = Math.round(
+      this.flatList_Ref._listRef._scrollMetrics.visibleLength /
+        heigthOfSelectedItem
+    );
+    offsset =
+      heigthOfSelectedItem *
+      (this.getSelectedIndex() - countOfItemsInScreen / 2);
+    this.flatList_Ref.scrollToOffset({
+      animated: true,
+      offset: offsset
+    });
+  };
 
-  // componentDidMount() {
-  //   console.log(this.flatList_Ref);
-  //   // this.flatList_Ref.scrollToIndex({ animated: true, index: 3 });
-  // }
+  componentDidMount() {
+    setTimeout(() => {
+      this.goToOffset();
+    }, 500);
+  }
 
   buttonPress = item => {
     this.setState({ selectedId: item.key });
@@ -61,14 +72,18 @@ class PickerCategory extends Component {
   };
 
   renderItem = item => {
+    if (!item.addText) {
+      item.addText = "";
+    }
+
     const { selectedId } = this.state;
     const { items, textStyle, textStyleSelected } = styles;
-    const isSelected = selectedId === item.key;
+    const isSelected = selectedId == item.key;
     let selectedItem = styles.selectedItemMiddle;
 
-    if (this.props.catId === 0) {
+    if (this.props.catId == 0) {
       selectedItem = styles.selectedItemFirst;
-    } else if (this.props.catId === this.props.catNum - 1) {
+    } else if (this.props.catId == this.props.catNum - 1) {
       selectedItem = styles.selectedItemLast;
     }
     return (
@@ -76,18 +91,34 @@ class PickerCategory extends Component {
         <View
           style={[
             items,
-
             isSelected && selectedItem,
-            this.props.catId === 0
+            this.props.catId == 0
               ? {
                   alignItems: "flex-end",
-                  width: "93%"
+                  paddingRight: "10%"
                 }
               : {
-                  alignItems: "center",
-                  width: "93%",
-                  left: "8%"
-                }
+                  alignItems: "flex-start",
+                  paddingLeft: "10%",
+                  alignSelf: "flex-end"
+                },
+            this.props.catId == 0 &&
+              this.props.catNum == 1 && {
+                width: "59%",
+                paddingRight: "5%"
+              },
+            this.props.catNum == 3 &&
+              this.props.catId == 1 && {
+                alignItems: "center"
+              },
+            isSelected &&
+              this.props.catId == 0 &&
+              this.props.catNum == 1 && { width: "67.5%" },
+            !isSelected &&
+              this.props.catNum == 2 &&
+              this.props.catId == 0 && {
+                width: "80%"
+              }
           ]}
         >
           <Text
@@ -97,21 +128,11 @@ class PickerCategory extends Component {
               {
                 fontFamily: "Montserrat",
                 fontSize: 20,
-                alignSelf: "flex-start",
                 textAlign: "center"
-              },
-              !isSelected && this.props.catId === 0
-                ? { left: "57%" }
-                : { left: "17%" },
-              isSelected && this.props.catId === 0 ? { left: "57%" } : {},
-              this.props.catId !== 1 &&
-              this.props.catId !== this.props.catNum &&
-              this.props.catNum >= 3
-                ? {}
-                : { left: "50%" }
+              }
             ]}
           >
-            {item.addText ? item.label + item.addText : item.label}
+            {isSelected ? item.label + item.addText : item.label}
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -122,12 +143,14 @@ class PickerCategory extends Component {
     return (
       <View style={{ flex: 1, width: "100%" }}>
         <FlatList
+          name={this.props.name}
           style={{ flex: 1, width: "100%" }}
           data={this.props.data}
           removeClippedSubviews={true}
           ref={ref => {
             this.flatList_Ref = ref;
           }}
+          initialNumToRender={100}
           renderItem={({ item }) => {
             return this.renderItem(item);
           }}
@@ -138,7 +161,8 @@ class PickerCategory extends Component {
 }
 const styles = {
   items: {
-    paddingVertical: 9
+    paddingVertical: 9,
+    width: "93%"
   },
   selectedItemFirst: {
     backgroundColor: "#B171B3",
@@ -158,10 +182,10 @@ const styles = {
     borderTopLeftRadius: 40
   },
   textStyle: {
-    color: "#666666"
+    color: Theme.gray1
   },
   textStyleSelected: {
-    color: "#ffffff"
+    color: Theme.white
   }
 };
 

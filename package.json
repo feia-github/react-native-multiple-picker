@@ -1,5 +1,5 @@
 {
-  "_from": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+  "_from": "github:feia-github/react-native-multiple-picker",
   "_id": "react-native-multiple-picker@0.0.21",
   "_inBundle": false,
   "_integrity": "",
@@ -7,20 +7,19 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "react-native-multiple-picker@git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "raw": "react-native-multiple-picker@github:feia-github/react-native-multiple-picker",
     "name": "react-native-multiple-picker",
     "escapedName": "react-native-multiple-picker",
-    "rawSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
-    "saveSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
-    "fetchSpec": "git://github.com/flyskywhy/react-native-multiple-picker.git",
+    "rawSpec": "github:feia-github/react-native-multiple-picker",
+    "saveSpec": "github:feia-github/react-native-multiple-picker",
+    "fetchSpec": null,
     "gitCommittish": null
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git://github.com/flyskywhy/react-native-multiple-picker.git#4baf4eb660ecd265cca244f293ba48f8cd729a7c",
-  "_spec": "react-native-multiple-picker@git://github.com/flyskywhy/react-native-multiple-picker.git",
-  "_where": "D:\\Projects\\feia5\\re-pregnancy",
+  "_resolved": "github:feia-github/react-native-multiple-picker#121a81f56d73b891de4255a1ed82127b78fc9dc9",
+  "_spec": "react-native-multiple-picker@github:feia-github/react-native-multiple-picker",
   "author": {
     "name": "Mojtaba Izadmehr"
   },
@@ -29,8 +28,8 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "react-native-linear-gradient": "^2.3.0",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "react-native-linear-gradient": "^2.3.0"
   },
   "deprecated": false,
   "description": "A fancy cross-platform multiple picker module for react-native.",

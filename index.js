@@ -18,6 +18,7 @@ import LinearGradient from "react-native-linear-gradient";
 import IconF from "react-native-vector-icons/Feather";
 import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
+import Theme from "../../src/Theme";
 
 const { width } = Dimensions.get("window");
 
@@ -43,7 +44,7 @@ const defaultProps = {
     start: { x: 0.0, y: 0 },
     end: { x: 1, y: 1.0 },
     locations: [0, 1],
-    colors: ["#743e4e", "#221d33"]
+    colors: [Theme.white, Theme.lightGray]
   }
 };
 
@@ -62,27 +63,15 @@ export default class ModalPicker extends BaseComponent {
   }
 
   componentDidMount() {
+    if (this.props.initValue.length == 1) {
+      this.props.initValue[0] = Number(this.props.initValue[0]);
+    }
     this.setState({ selection: this.props.initValue });
   }
 
   onChange = (item, catId) => {
     const selection = this.state.selection;
     selection[catId] = item;
-
-    if (catId === 2) {
-      let oo = moment().year();
-      if (selection[2] !== undefined) {
-        oo = selection[2];
-      }
-
-      let kk = oo + "-" + 2 + "-01";
-      kk = moment(kk);
-    }
-    if (catId === 1) {
-      let kk = selection[2] || moment().year() + "-" + selection[1] + "-01";
-      kk = moment(kk);
-    }
-
     this.setState(selection);
   };
 
@@ -98,8 +87,7 @@ export default class ModalPicker extends BaseComponent {
   }
 
   accept() {
-    const { selection } = this.state;
-    this.props.onChange(selection);
+    this.props.onChange(this.state.selection);
 
     this.setState({
       modalVisible: false
@@ -116,47 +104,20 @@ export default class ModalPicker extends BaseComponent {
     if (this.props.children) {
       return this.props.children;
     }
-    return <Text>Please Select an Item!</Text>;
+    return <Text></Text>;
   }
 
   renderOptionList(catItem, catId, catNum) {
-    let borderLeft = catId === 0 ? 0 : 20;
-    let borderRight = catId === catNum - 1 ? 0 : 20;
-
     return (
       <View
+        name={this.props.name}
         key={catId}
         style={{
           width: (width * 1) / this.props.data.length
         }}
       >
-        {this.props.label[catId].length > 0 ? (
-          <View
-            style={{
-              paddingVertical: 8,
-              width: "100%",
-              alignItems: "center",
-              backgroundColor: "#ffffff05",
-              borderBottomRightRadius: borderRight,
-              borderBottomLeftRadius: borderLeft,
-              marginBottom: 2,
-              elevation: 1
-            }}
-          >
-            <Text
-              style={{
-                color: "#f9976c",
-                fontSize: 20,
-                fontFamily: "Montserrat"
-              }}
-            >
-              {this.props.label[catId]}
-            </Text>
-          </View>
-        ) : (
-          <View style={{ height: "8%" }}></View>
-        )}
         <PickerCategory
+          name={this.props.name}
           key={catId}
           initValue={this.props.initValue}
           catId={catId}
@@ -187,7 +148,7 @@ export default class ModalPicker extends BaseComponent {
     let catId = -1;
     let catShow = this.props.data.map(catItem => {
       catId++;
-      if (catId === 0 && catNum === 3 && this.props.data[0].length === 0) {
+      if (catId == 0 && catNum == 3 && this.props.data[0].length == 0) {
         catItem = this.showDays();
       }
       return this.renderOptionList(catItem, catId, catNum);
@@ -217,7 +178,7 @@ export default class ModalPicker extends BaseComponent {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TouchableOpacity onPress={this.close}>
             <View style={styles.cancelStyle}>
-              <IconAD name="close" size={25} color="#999999" />
+              <IconAD name="close" size={25} color={Theme.gray2} />
             </View>
           </TouchableOpacity>
 
@@ -225,12 +186,12 @@ export default class ModalPicker extends BaseComponent {
             style={[
               {
                 width: "60%",
-                color: "#666666",
+                color: Theme.gray1,
                 justifyContent: "center",
                 alignSelf: "center",
                 textAlign: "center",
                 fontSize: 13,
-                fontFamily: "Comfortaa",
+                fontFamily: Theme.primaryFontFamily,
                 textTransform: "uppercase"
               },
               this.props.bottomLabel.style
@@ -241,7 +202,7 @@ export default class ModalPicker extends BaseComponent {
 
           <TouchableOpacity onPress={this.accept}>
             <View style={styles.acceptStyle}>
-              <IconF name="check" size={30} color="#27AEE7" />
+              <IconF name="check" size={30} color={Theme.color2} />
             </View>
           </TouchableOpacity>
         </View>
@@ -275,7 +236,6 @@ export default class ModalPicker extends BaseComponent {
       </Modal>
     );
 
-    console.log("new");
     return (
       <View style={this.props.style}>
         {dp}
