@@ -40,12 +40,6 @@ class PickerCategory extends Component {
       heigthOfSelectedItem = this.flatList_Ref._listRef._frames[
         this.props.initValue[this.props.catId]
       ].length;
-      console.log(
-        "hi",
-        this.flatList_Ref._listRef._frames[
-          this.props.initValue[this.props.catId].length
-        ]
-      );
     }
     let countOfItemsInScreen = Math.round(
       this.flatList_Ref._listRef._scrollMetrics.visibleLength /
