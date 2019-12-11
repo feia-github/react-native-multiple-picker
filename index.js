@@ -20,7 +20,7 @@ import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
 import Theme from "../../src/Theme";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const propTypes = {
   data: PropTypes.array,
@@ -59,7 +59,7 @@ export default class ModalPicker extends BaseComponent {
       transparent: false,
       selected: "please select",
       selection: new Array(this.props.data.length)
-    };
+  };
   }
 
   componentDidMount() {
@@ -165,7 +165,7 @@ export default class ModalPicker extends BaseComponent {
       pickerHeight = 88 * propsHeight;
     }
     return (
-      <View style={{ flex: 1, height: "100%", justifyContent: "center" }}>
+      <View style={{ flex: 1, height: height, justifyContent: "center" }}>
         <View
           style={{
             flexDirection: "row",
@@ -225,7 +225,7 @@ export default class ModalPicker extends BaseComponent {
             locations={this.props.gradientStyle.locations}
             colors={this.props.gradientStyle.colors}
             style={{
-              height: "100%",
+              height: height,
               width: "100%",
             }}
           >
@@ -235,7 +235,7 @@ export default class ModalPicker extends BaseComponent {
     );
 
     return (
-      <View style={this.props.style}>
+      <View style={[{alignSelf:'center', width:'100%'},this.props.style,]}>
         {dp}
         <TouchableOpacity onPress={this.open}>
           {this.renderChildren()}
