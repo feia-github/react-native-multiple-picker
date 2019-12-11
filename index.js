@@ -96,7 +96,8 @@ export default class ModalPicker extends BaseComponent {
 
   open() {
     this.setState({
-      modalVisible: true
+      modalVisible: true,
+      selection:this.props.initValue
     });
   }
 
@@ -216,10 +217,8 @@ export default class ModalPicker extends BaseComponent {
         transparent={true}
         ref="modal"
         visible={this.state.modalVisible}
-        onRequestClose={this.close}
         animationType={this.state.animationType}
       >
-        <TouchableWithoutFeedback onPress={this.close}>
           <LinearGradient
             start={this.props.gradientStyle.start}
             end={this.props.gradientStyle.end}
@@ -227,12 +226,11 @@ export default class ModalPicker extends BaseComponent {
             colors={this.props.gradientStyle.colors}
             style={{
               height: "100%",
-              width: "100%"
+              width: "100%",
             }}
           >
             {this.renderCategory()}
           </LinearGradient>
-        </TouchableWithoutFeedback>
       </Modal>
     );
 

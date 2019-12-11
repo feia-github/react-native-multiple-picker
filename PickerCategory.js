@@ -40,12 +40,6 @@ class PickerCategory extends Component {
       heigthOfSelectedItem = this.flatList_Ref._listRef._frames[
         this.props.initValue[this.props.catId]
       ].length;
-      console.log(
-        "hi",
-        this.flatList_Ref._listRef._frames[
-          this.props.initValue[this.props.catId].length
-        ]
-      );
     }
     let countOfItemsInScreen = Math.round(
       this.flatList_Ref._listRef._scrollMetrics.visibleLength /
@@ -141,7 +135,7 @@ class PickerCategory extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, width: "100%" }}>
+      <View style={{ flex: 1, width: "100%"}}>
         <FlatList
           name={this.props.name}
           style={{ flex: 1, width: "100%" }}
@@ -150,6 +144,7 @@ class PickerCategory extends Component {
           ref={ref => {
             this.flatList_Ref = ref;
           }}
+          keyExtractor = { (item, index) => index.toString() }
           initialNumToRender={100}
           renderItem={({ item }) => {
             return this.renderItem(item);
