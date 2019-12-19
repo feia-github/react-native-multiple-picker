@@ -33,24 +33,25 @@ class PickerCategory extends Component {
 
   goToOffset = () => {
     let heigthOfSelectedItem = 0;
+
     if (
       this.flatList_Ref &&
-      this.flatList_Ref._listRef._frames[this.props.initValue[this.props.catId]]
+      this.flatList_Ref._listRef._frames[0]
     ) {
+
       heigthOfSelectedItem = this.flatList_Ref._listRef._frames[
-        this.props.initValue[this.props.catId]
+        0
       ].length;
     }
     let countOfItemsInScreen = Math.round(
       this.flatList_Ref._listRef._scrollMetrics.visibleLength /
         heigthOfSelectedItem
     );
-    offsset =
-      heigthOfSelectedItem *
-      (this.getSelectedIndex() - countOfItemsInScreen / 2);
+      
     this.flatList_Ref.scrollToOffset({
       animated: true,
-      offset: offsset
+      offset: heigthOfSelectedItem *
+      (this.getSelectedIndex() - countOfItemsInScreen / 2)
     });
   };
 
