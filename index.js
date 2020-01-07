@@ -62,7 +62,7 @@ export default class ModalPicker extends BaseComponent {
   };
   }
 
-  componentDidMount() {
+  componentWillMount(){
     if (this.props.initValue.length == 1) {
       this.props.initValue[0] = Number(this.props.initValue[0]);
     }
