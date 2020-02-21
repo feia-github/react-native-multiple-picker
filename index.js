@@ -15,7 +15,6 @@ import PickerCategory from "./PickerCategory";
 import styles from "./style";
 import BaseComponent from "./BaseComponent";
 import LinearGradient from "react-native-linear-gradient";
-import IconF from "react-native-vector-icons/Feather";
 import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
 import Theme from "../../src/Theme";
@@ -203,7 +202,7 @@ export default class ModalPicker extends BaseComponent {
 
           <TouchableOpacity onPress={this.accept}>
             <View style={styles.acceptStyle}>
-              <IconF name="check" size={30} color={Theme.color2} />
+              <IconAD name="check" size={30} color={Theme.color2} />
             </View>
           </TouchableOpacity>
         </View>
