@@ -27,7 +27,8 @@ const propTypes = {
   initValue: PropTypes.array,
   label: PropTypes.array,
   height: PropTypes.number,
-  gradientStyle: PropTypes.object
+  gradientStyle: PropTypes.object,
+  selectorColor: PropTypes.array
 };
 
 const defaultProps = {
@@ -44,7 +45,8 @@ const defaultProps = {
     end: { x: 1, y: 1.0 },
     locations: [0, 1],
     colors: [Theme.white, Theme.lightGray]
-  }
+  },
+  selectorColor: ["#B171B3","#CCA3CD","#CCA3CD"]
 };
 
 export default class ModalPicker extends BaseComponent {
@@ -113,7 +115,7 @@ export default class ModalPicker extends BaseComponent {
         name={this.props.name}
         key={catId}
         style={{
-          width: (width * 1) / this.props.data.length
+          width: (width * 1) / this.props.data.length,
         }}
       >
         <PickerCategory
@@ -124,6 +126,7 @@ export default class ModalPicker extends BaseComponent {
           catNum={catNum}
           data={catItem}
           onPress={this.onChange}
+          selectorColor={this.props.selectorColor}
         />
       </View>
     );
@@ -159,6 +162,7 @@ export default class ModalPicker extends BaseComponent {
 
     if (propsHeight * 1) {
       propsHeight = propsHeight < 0 ? 0 : propsHeight;
+
       propsHeight = propsHeight > 1 ? 1 : propsHeight;
 
       pickerHeight = 88 * propsHeight;
@@ -169,7 +173,7 @@ export default class ModalPicker extends BaseComponent {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            height: pickerHeight + "%"
+            height: pickerHeight + "%",
           }}
         >
           {catShow}

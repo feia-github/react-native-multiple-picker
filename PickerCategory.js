@@ -70,17 +70,22 @@ class PickerCategory extends Component {
     if (!item.addText) {
       item.addText = "";
     }
+    
 
     const { selectedId } = this.state;
     const { items, textStyle, textStyleSelected } = styles;
     const isSelected = selectedId == item.key;
-    let selectedItem = styles.selectedItemMiddle;
+    let selectedItem = {...styles.selectedItemMiddle};
+    let lessThanTen = item.label < 10 ? '0' + item.label : item.label
 
     if (this.props.catId == 0) {
-      selectedItem = styles.selectedItemFirst;
+      selectedItem = {...styles.selectedItemFirst};
     } else if (this.props.catId == this.props.catNum - 1) {
       selectedItem = styles.selectedItemLast;
     }
+
+    selectedItem = {...selectedItem, backgroundColor:this.props.selectorColor[this.props.catId]}
+
     return (
       <TouchableWithoutFeedback onPress={() => this.buttonPress(item)}>
         <View
@@ -90,21 +95,26 @@ class PickerCategory extends Component {
             this.props.catId == 0
               ? {
                   alignItems: "flex-end",
-                  paddingRight: "10%"
-                }
+                  paddingRight: "10%",
+                  width:'90%'
+                  }
               : {
                   alignItems: "flex-start",
                   paddingLeft: "10%",
-                  alignSelf: "flex-end"
+                  alignSelf: "flex-end",
+                  width:'90%'
                 },
             this.props.catId == 0 &&
               this.props.catNum == 1 && {
                 width: "59%",
-                paddingRight: "5%"
+                paddingRight: "5%",
+                
               },
             this.props.catNum == 3 &&
               this.props.catId == 1 && {
-                alignItems: "center"
+                alignItems: "center",
+                width:'100%',
+                paddingLeft: 0, 
               },
             isSelected &&
               this.props.catId == 0 &&
@@ -127,7 +137,7 @@ class PickerCategory extends Component {
               }
             ]}
           >
-            {isSelected ? item.label + item.addText : item.label}
+            {isSelected ? lessThanTen + item.addText : lessThanTen}
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -157,31 +167,34 @@ class PickerCategory extends Component {
 }
 const styles = {
   items: {
+    marginVertical: 8,
     paddingVertical: 9,
-    width: "93%"
+    // paddingVertical: 18,
+    width: "93%",
   },
   selectedItemFirst: {
-    backgroundColor: "#B171B3",
     borderBottomRightRadius: 40,
-    borderTopRightRadius: 40
+    borderTopRightRadius: 40,
+    // paddingVertical:'8%'
   },
   selectedItemLast: {
-    backgroundColor: "#CCA3CD",
     borderBottomLeftRadius: 40,
-    borderTopLeftRadius: 40
+    borderTopLeftRadius: 40,
+    // paddingVertical:'8%'
   },
   selectedItemMiddle: {
-    backgroundColor: "#CCA3CD",
     borderBottomRightRadius: 40,
     borderTopRightRadius: 40,
     borderBottomLeftRadius: 40,
-    borderTopLeftRadius: 40
+    borderTopLeftRadius: 40,
+    // paddingVertical:'8%'
   },
   textStyle: {
-    color: Theme.gray1
+    color: Theme.gray1,
+
   },
   textStyleSelected: {
-    color: Theme.white
+    color: Theme.white,
   }
 };
 
