@@ -123,7 +123,11 @@ class PickerCategory extends Component {
               this.props.catNum == 2 &&
               this.props.catId == 0 && {
                 width: "80%"
-              }
+            },
+            this.props.catNum == 2 && this.props.catId == 0 && {
+              alignItems: 'flex-start',
+              paddingLeft:'53%'
+            }
           ]}
         >
           <Text
