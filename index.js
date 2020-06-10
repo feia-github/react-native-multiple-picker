@@ -6,10 +6,9 @@ import PropTypes from "prop-types";
 import {
   View,
   Dimensions,
-  Modal,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  Platform
 } from "react-native";
 import PickerCategory from "./PickerCategory";
 import styles from "./style";
@@ -18,6 +17,7 @@ import LinearGradient from "react-native-linear-gradient";
 import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
 import Theme from "../../src/Theme";
+import Modal, { ModalContent } from 'react-native-modals';
 
 const { width, height } = Dimensions.get("window");
 
@@ -60,10 +60,10 @@ export default class ModalPicker extends BaseComponent {
       transparent: false,
       selected: "please select",
       selection: new Array(this.props.data.length)
-  };
+    };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     if (this.props.initValue.length == 1) {
       this.props.initValue[0] = Number(this.props.initValue[0]);
     }
@@ -98,7 +98,7 @@ export default class ModalPicker extends BaseComponent {
   open() {
     this.setState({
       modalVisible: true,
-      selection:this.props.initValue
+      selection: this.props.initValue
     });
   }
 
@@ -217,28 +217,29 @@ export default class ModalPicker extends BaseComponent {
   render() {
     const dp = (
       <Modal
-        transparent={true}
-        ref="modal"
+        width={width * 1.1}
+        height={Platform.OS == 'ios' ? height * 1.1 : height * 1.2}
         visible={this.state.modalVisible}
-        animationType={this.state.animationType}
+        onTouchOutside={this.close}
       >
+        <ModalContent style={{ flex: 1 }}>
           <LinearGradient
             start={this.props.gradientStyle.start}
             end={this.props.gradientStyle.end}
             locations={this.props.gradientStyle.locations}
             colors={this.props.gradientStyle.colors}
             style={{
-              height: height,
-              width: "100%",
+              flex: 1
             }}
           >
             {this.renderCategory()}
           </LinearGradient>
+        </ModalContent>
       </Modal>
     );
 
     return (
-      <View style={[{alignSelf:'center', width:'100%'},this.props.style,]}>
+      <View style={[{ alignSelf: 'center', width: '100%' }, this.props.style,]}>
         {dp}
         <TouchableOpacity onPress={this.open}>
           {this.renderChildren()}
