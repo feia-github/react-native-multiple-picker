@@ -8,7 +8,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
-  Platform
+  Platform,
 } from "react-native";
 import PickerCategory from "./PickerCategory";
 import styles from "./style";
@@ -17,7 +17,7 @@ import LinearGradient from "react-native-linear-gradient";
 import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
 import Theme from "../../src/Theme";
-import Modal, { ModalContent } from 'react-native-modals';
+import Modal, { ModalContent } from "react-native-modals";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,7 +28,7 @@ const propTypes = {
   label: PropTypes.array,
   height: PropTypes.number,
   gradientStyle: PropTypes.object,
-  selectorColor: PropTypes.array
+  selectorColor: PropTypes.array,
 };
 
 const defaultProps = {
@@ -44,9 +44,9 @@ const defaultProps = {
     start: { x: 0.0, y: 0 },
     end: { x: 1, y: 1.0 },
     locations: [0, 1],
-    colors: [Theme.white, Theme.lightGray]
+    colors: [Theme.white, Theme.lightGray],
   },
-  selectorColor: ["#B171B3","#CCA3CD","#CCA3CD"]
+  selectorColor: ["#B171B3", "#CCA3CD", "#CCA3CD"],
 };
 
 export default class ModalPicker extends BaseComponent {
@@ -59,7 +59,7 @@ export default class ModalPicker extends BaseComponent {
       modalVisible: false,
       transparent: false,
       selected: "please select",
-      selection: new Array(this.props.data.length)
+      selection: new Array(this.props.data.length),
     };
   }
 
@@ -83,7 +83,7 @@ export default class ModalPicker extends BaseComponent {
     }
 
     this.setState({
-      modalVisible: false
+      modalVisible: false,
     });
   }
 
@@ -91,14 +91,14 @@ export default class ModalPicker extends BaseComponent {
     this.props.onChange(this.state.selection);
 
     this.setState({
-      modalVisible: false
+      modalVisible: false,
     });
   }
 
   open() {
     this.setState({
       modalVisible: true,
-      selection: this.props.initValue
+      selection: this.props.initValue,
     });
   }
 
@@ -135,12 +135,12 @@ export default class ModalPicker extends BaseComponent {
   showDays() {
     const year = this.state.selection[2] || moment().year();
     const month = this.state.selection[1] || moment().month();
-    const countDayes = moment(year + "-" + month).daysInMonth();
-    const days = new Array(countDayes).fill({ label: null }).map((item, id) => {
+    const countDays = moment(year + "-" + month).daysInMonth();
+    const days = new Array(countDays).fill({ label: null }).map((item, id) => {
       const option = id + 1;
       return {
         label: option,
-        key: option
+        key: option,
       };
     });
     return days;
@@ -149,7 +149,7 @@ export default class ModalPicker extends BaseComponent {
   renderCategory() {
     const catNum = this.props.data.length;
     let catId = -1;
-    let catShow = this.props.data.map(catItem => {
+    let catShow = this.props.data.map((catItem) => {
       catId++;
       if (catId == 0 && catNum == 3 && this.props.data[0].length == 0) {
         catItem = this.showDays();
@@ -196,9 +196,9 @@ export default class ModalPicker extends BaseComponent {
                 textAlign: "center",
                 fontSize: 13,
                 fontFamily: Theme.primaryFontFamily,
-                textTransform: "uppercase"
+                textTransform: "uppercase",
               },
-              this.props.bottomLabel.style
+              this.props.bottomLabel.style,
             ]}
           >
             {this.props.bottomLabel.text || ""}
@@ -218,9 +218,11 @@ export default class ModalPicker extends BaseComponent {
     const dp = (
       <Modal
         width={width * 1.1}
-        height={Platform.OS == 'ios' ? height * 1.1 : height * 1.2}
+        height={Platform.OS == "ios" ? height * 1.07 : height * 1.2}
         visible={this.state.modalVisible}
         onTouchOutside={this.close}
+        rounded={false}
+        useNativeDriver={true}
       >
         <ModalContent style={{ flex: 1 }}>
           <LinearGradient
@@ -229,7 +231,8 @@ export default class ModalPicker extends BaseComponent {
             locations={this.props.gradientStyle.locations}
             colors={this.props.gradientStyle.colors}
             style={{
-              flex: 1
+              flex: 1,
+              marginTop: "6%",
             }}
           >
             {this.renderCategory()}
@@ -239,7 +242,7 @@ export default class ModalPicker extends BaseComponent {
     );
 
     return (
-      <View style={[{ alignSelf: 'center', width: '100%' }, this.props.style,]}>
+      <View style={[{ alignSelf: "center", width: "100%" }, this.props.style]}>
         {dp}
         <TouchableOpacity onPress={this.open}>
           {this.renderChildren()}
