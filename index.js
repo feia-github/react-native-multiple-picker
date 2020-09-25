@@ -8,7 +8,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
-  Platform,
+  Modal,
 } from "react-native";
 import PickerCategory from "./PickerCategory";
 import styles from "./style";
@@ -17,7 +17,6 @@ import LinearGradient from "react-native-linear-gradient";
 import IconAD from "react-native-vector-icons/AntDesign";
 import moment from "moment";
 import Theme from "../../src/Theme";
-import Modal, { ModalContent } from "react-native-modals";
 
 const { width, height } = Dimensions.get("window");
 
@@ -185,7 +184,6 @@ export default class ModalPicker extends BaseComponent {
               <IconAD name="close" size={25} color={Theme.gray2} />
             </View>
           </TouchableOpacity>
-
           <Text
             style={[
               {
@@ -215,17 +213,13 @@ export default class ModalPicker extends BaseComponent {
   }
 
   render() {
-    const dp = (
+    const dp = 
       <Modal
-        width={width * 1.1}
-        height={Platform.OS == "ios" ? height * 1.07 : height * 1.2}
+        animationType="slide"
+        transparent={true}
         visible={this.state.modalVisible}
-        onTouchOutside={this.close}
-        rounded={false}
-        useNativeDriver={true}
       >
-        <ModalContent style={{ flex: 1 }}>
-          <LinearGradient
+        <LinearGradient
             start={this.props.gradientStyle.start}
             end={this.props.gradientStyle.end}
             locations={this.props.gradientStyle.locations}
@@ -236,10 +230,8 @@ export default class ModalPicker extends BaseComponent {
             }}
           >
             {this.renderCategory()}
-          </LinearGradient>
-        </ModalContent>
+        </LinearGradient>
       </Modal>
-    );
 
     return (
       <View style={[{ alignSelf: "center", width: "100%" }, this.props.style]}>
